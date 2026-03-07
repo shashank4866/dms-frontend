@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../services/api.service';
 import { AdminNavbar } from '../../../components/admin-navbar/admin-navbar';
+import { FcmService } from '../../../services/fcm';
 
 @Component({
     selector: 'app-admin-dashboard',
@@ -13,10 +14,16 @@ export class AdminDashboard implements OnInit {
     products: any[] = [];
     orders: any[] = [];
     loading = true;
+    user_id:any;
+    fcmToken='';
 
-    constructor(private api: ApiService) { }
+
+    constructor(private api: ApiService,private fcmservice:FcmService) { }
 
     ngOnInit() {
+       
+
+
         this.api.getProducts().subscribe((res: any) => {
             this.products = res.data || [];
             this.checkLoaded();

@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ApiService } from '../../services/api.service';
+import { NotificationCenterComponent } from '../notification-center/notification-center';
 
 @Component({
     selector: 'app-navbar',
-    imports: [CommonModule, RouterLink, FormsModule],
+    imports: [CommonModule, RouterLink, FormsModule, NotificationCenterComponent],
     templateUrl: './navbar.html',
     styleUrl: './navbar.css',
 })

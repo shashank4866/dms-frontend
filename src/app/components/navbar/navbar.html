@@ -27,6 +27,8 @@
             <span class="badge-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
         </a>
 
+        <app-notification-center></app-notification-center>
+
         <div class="user-menu">
             <button class="nav-icon-btn user-btn" (click)="toggleDropdown()">
                 <div class="avatar">{{ user?.name?.charAt(0)?.toUpperCase() || 'U' }}</div>

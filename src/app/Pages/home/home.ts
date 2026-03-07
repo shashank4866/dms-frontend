@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { Navbar } from '../../components/navbar/navbar';
+import { FcmService } from '../../services/fcm';
 
 @Component({
     selector: 'app-home',
@@ -19,6 +20,8 @@ export class Home implements OnInit {
     user: any = null;
     toast = '';
     toastType = 'success';
+    user_id:any;
+    fcmToken='';
 
     categories = ['All Products', 'Audio', 'Wearables', 'Computers', 'Photography', 'Mobile'];
     selectedCategory = 'All Products';
@@ -30,10 +33,15 @@ export class Home implements OnInit {
         private api: ApiService,
         private auth: AuthService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private fcmService:FcmService
     ) { }
 
     ngOnInit() {
+      this.user_id=localStorage.getItem('user_id') || 0;
+      this.fcmToken=localStorage.getItem('fcmToken') || '';
+
+      // this.fcmService.sendTokenToBackend(this.fcmToken,this.user_id)
         this.user = this.auth.getUser();
         this.route.queryParams.subscribe(params => {
             this.searchQuery = params['q'] || '';
