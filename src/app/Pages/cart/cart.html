@@ -21,8 +21,7 @@
             <div class="cart-items">
                 <div class="cart-item" *ngFor="let item of cartItems">
                     <div class="item-image">
-                        <img [src]="item.image_url || 'https://placehold.co/80x80?text=P'" [alt]="item.name"
-                            onerror="this.src='https://placehold.co/80x80?text=P'" />
+                        <img [src]="item.image_url " [alt]="item.name" />
                     </div>
                     <div class="item-details">
                         <h3>{{ item.name }}</h3>

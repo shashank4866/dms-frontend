@@ -2,13 +2,24 @@
     <app-navbar></app-navbar>
     <div class="page-content">
         <div class="profile-card">
+            <!-- Profile Header -->
             <div class="profile-header">
-                <div class="avatar-large">{{ getInitials() }}</div>
+                <div class="avatar-container">
+                    <div class="avatar-large">
+                        <img *ngIf="previewUrl" [src]="previewUrl" alt="Profile Preview" />
+                        <span *ngIf="!previewUrl">{{ getInitials() }}</span>
+                    </div>
+                    <button *ngIf="isEditing" class="edit-avatar-btn" (click)="triggerFileInput()" title="Upload new picture">
+                        <span class="material-icons">camera_alt</span>
+                    </button>
+                </div>
                 <div class="profile-names">
                     <h2>{{ user?.name }}</h2>
                     <p>Customer Account</p>
                 </div>
             </div>
+
+            <!-- Profile Body -->
             <div class="profile-body">
                 <div class="info-row">
                     <div class="info-label"><span class="material-icons">person</span> Full Name</div>
@@ -26,6 +37,40 @@
                     <div class="info-label"><span class="material-icons">badge</span> Role</div>
                     <div class="info-value"><span class="role-badge">{{ user?.role }}</span></div>
                 </div>
+            </div>
+
+            <!-- Edit Profile Section -->
+            <div *ngIf="isEditing" class="edit-section">
+                <h3>Edit Profile Picture</h3>
+
+                <div class="file-upload-area" (click)="triggerFileInput()" [class.has-file]="selectedFile">
+                    <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+                    <div class="upload-content">
+                        <span class="material-icons">cloud_upload</span>
+                        <p *ngIf="!selectedFile">Click to upload photo or drag and drop</p>
+                        <p *ngIf="selectedFile">File selected: {{ selectedFile?.name }}</p>
+                    </div>
+                </div>
+
+                <div *ngIf="previewUrl" class="preview-section">
+                    <p>Preview:</p>
+                    <img [src]="previewUrl" alt="Profile Preview" class="preview-image" />
+                </div>
+
+                <div class="edit-actions">
+                    <button (click)="updateProfile()" [disabled]="isLoading || !selectedFile" class="btn btn-primary">
+                        <span *ngIf="!isLoading">Update Profile</span>
+                        <span *ngIf="isLoading">Saving...</span>
+                    </button>
+                    <button (click)="cancelEdit()" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Profile Action Buttons -->
+            <div class="profile-actions">
+                <button *ngIf="!isEditing" (click)="toggleEditMode()" class="btn btn-primary">
+                    <span class="material-icons">edit</span> Edit Profile Picture
+                </button>
             </div>
         </div>
     </div>

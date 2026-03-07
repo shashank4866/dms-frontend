@@ -71,4 +71,9 @@ export class ApiService {
   getAllOrders(): Observable<any> {
     return this.http.get(`${BASE}/getAllOrders`);
   }
+
+  // Profile
+  updateProfile(data:any): Observable<any> {
+    return this.http.patch(`${BASE}/updateProfile`, data);
+  }
 }

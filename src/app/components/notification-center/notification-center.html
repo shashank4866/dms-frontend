@@ -23,7 +23,8 @@
       <div *ngFor="let notification of notifications" class="notification-item" [class.unread]="!notification.read">
         <div class="notification-content" (click)="markAsRead(notification.id, $event)">
           <div class="notification-icon">
-            <img [src]="notification.icon" [alt]="notification.title" />
+            <!-- default fell ion for all notifi -->
+            <span class="material-icons">notifications</span>
           </div>
           <div class="notification-text">
             <h4>{{ notification.title }}</h4>

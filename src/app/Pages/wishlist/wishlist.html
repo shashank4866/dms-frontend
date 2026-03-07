@@ -20,8 +20,7 @@
         <div class="wishlist-grid" *ngIf="!loading && wishlistItems.length > 0">
             <div class="wishlist-card" *ngFor="let item of wishlistItems">
                 <div class="card-image">
-                    <img [src]="item.image_url || 'https://placehold.co/260x180?text=P'" [alt]="item.name"
-                        onerror="this.src='https://placehold.co/260x180?text=P'" />
+                    <img [src]="item.image_url " [alt]="item.name" />
                     <button class="remove-fab" (click)="removeFromWishlist(item.id)" title="Remove">
                         <span class="material-icons">close</span>
                     </button>
