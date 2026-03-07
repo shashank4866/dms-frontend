@@ -38,8 +38,8 @@ export class Login {
     this.api.login(this.email, this.password).subscribe({
       next: (res: any) => {
         this.loading = false;
-        if (res.data && res.data.length > 0) {
-          const user = res.data[0];
+        if (res.status == 200) {
+          const user = res.data;
           this.auth.setUser(user);
           this.user_id = user.id;
           localStorage.setItem('user_id', this.user_id);
