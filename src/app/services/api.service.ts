@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-const BASE = 'http://localhost:3001';
-
+// local
+// const BASE = 'http://localhost:3001';
+// prod
+const BASE = 'https://dms-backend-pm4s.onrender.com';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   constructor(private http: HttpClient) { }
