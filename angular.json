@@ -22,7 +22,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "public"
+              {
+                "glob": "**/*",
+                "input": "public",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/custom-theme.scss",
