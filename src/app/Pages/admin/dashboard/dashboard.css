@@ -249,4 +249,45 @@ td {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .admin-content {
+        padding: 20px 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .stat-value {
+        font-size: 22px;
+    }
+
+    .admin-header-row h1 {
+        font-size: 20px;
+    }
+
+    .date-label {
+        display: none;
+    }
+
+    .admin-content {
+        padding: 16px 12px;
+    }
+
+    /* Scrollable table on mobile */
+    .table-card {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 520px;
+    }
 }

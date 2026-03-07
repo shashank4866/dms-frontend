@@ -427,3 +427,26 @@
         gap: 12px;
     }
 }
+
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .product-image-wrapper {
+        height: 160px;
+    }
+
+    .product-info {
+        padding: 12px;
+    }
+
+    .price {
+        font-size: 16px;
+    }
+
+    .products-title {
+        font-size: 18px;
+    }
+}

@@ -210,3 +210,26 @@ td {
         transform: translateY(0);
     }
 }
+
+/* ─── MOBILE RESPONSIVE ─────────────────────────────── */
+@media (max-width: 768px) {
+    .admin-content {
+        padding: 16px 12px;
+    }
+
+    .admin-header-row h1 {
+        font-size: 20px;
+    }
+
+    .table-card {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 600px;
+    }
+
+    .status-select {
+        min-width: 100px;
+    }
+}

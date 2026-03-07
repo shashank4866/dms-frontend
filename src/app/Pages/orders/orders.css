@@ -202,3 +202,28 @@
 .step-line.done {
     background: #7F3DFF;
 }
+
+/* ─── MOBILE RESPONSIVE ─────────────────────────────── */
+@media (max-width: 768px) {
+    .page-content {
+        padding: 16px 12px;
+    }
+
+    .page-title {
+        font-size: 20px;
+    }
+
+    .orders-table-wrapper {
+        overflow-x: auto;
+    }
+
+    .orders-table {
+        min-width: 560px;
+    }
+}
+
+@media (max-width: 480px) {
+    .progress-steps {
+        display: none;
+    }
+}

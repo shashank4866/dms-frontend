@@ -12,6 +12,15 @@
   padding: 8px;
 }
 
+/* When inside admin dark header, bell inherits white color from parent */
+:host-context(.admin-right) .notification-bell {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+:host-context(.admin-right) .notification-bell:hover {
+  color: #fff;
+}
+
 .notification-bell:hover {
   color: #ff6b6b;
 }
@@ -207,6 +216,14 @@
   right: 0;
   bottom: 0;
   z-index: 999;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .notification-dropdown {
+    width: calc(100vw - 32px);
+    right: -60px;
+  }
 }
 
 /* Scrollbar styling */

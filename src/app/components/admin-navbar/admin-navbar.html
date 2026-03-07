@@ -3,30 +3,79 @@
         <div class="brand-icon">
             <span class="material-icons">dashboard</span>
         </div>
-        <span>Admin Dashboard</span>
+        <span class="brand-text">Admin Dashboard</span>
     </div>
 
+    <!-- Desktop Nav Links -->
     <nav class="admin-nav">
         <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
-            <span class="material-icons">dashboard</span> Overview
+            <span class="material-icons">dashboard</span> <span class="nav-label">Overview</span>
         </a>
         <a routerLink="/admin/products" routerLinkActive="active" class="nav-link">
-            <span class="material-icons">inventory_2</span> Products
+            <span class="material-icons">inventory_2</span> <span class="nav-label">Products</span>
         </a>
         <a routerLink="/admin/orders" routerLinkActive="active" class="nav-link">
-            <span class="material-icons">receipt_long</span> Orders
+            <span class="material-icons">receipt_long</span> <span class="nav-label">Orders</span>
         </a>
         <a routerLink="/admin/users" routerLinkActive="active" class="nav-link">
-            <span class="material-icons">group</span> Users
+            <span class="material-icons">group</span> <span class="nav-label">Users</span>
         </a>
     </nav>
 
     <div class="admin-right">
         <span class="admin-badge">Admin</span>
-        <span class="admin-name">{{ user?.name }}</span>
-        <button class="logout-btn" (click)="logout()">
-            <span class="material-icons">logout</span>
-            Logout
+
+        <!-- Notification Bell -->
+        <app-notification-center></app-notification-center>
+
+        <!-- User Profile Dropdown -->
+        <div class="admin-user-menu">
+            <button class="admin-user-btn" (click)="toggleProfileDropdown()">
+                <div class="admin-avatar">{{ user?.name?.charAt(0)?.toUpperCase() || 'A' }}</div>
+                <span class="admin-user-name">{{ user?.name }}</span>
+                <span class="material-icons chevron">expand_more</span>
+            </button>
+
+            <div class="admin-dropdown" *ngIf="showProfileDropdown">
+                <div class="admin-dropdown-header">
+                    <strong>{{ user?.name }}</strong>
+                    <span>{{ user?.email }}</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a routerLink="/profile" class="admin-dropdown-item" (click)="showProfileDropdown = false">
+                    <span class="material-icons">person</span> My Profile
+                </a>
+                <a routerLink="/home" class="admin-dropdown-item" (click)="showProfileDropdown = false">
+                    <span class="material-icons">storefront</span> Go to Shop
+                </a>
+                <div class="dropdown-divider"></div>
+                <button class="admin-dropdown-item logout-item" (click)="logout()">
+                    <span class="material-icons">logout</span> Sign Out
+                </button>
+            </div>
+        </div>
+
+        <!-- Hamburger for mobile -->
+        <button class="hamburger-btn" (click)="toggleMobileMenu()">
+            <span class="material-icons">{{ showMobileMenu ? 'close' : 'menu' }}</span>
         </button>
     </div>
 </header>
+
+<!-- Mobile Nav Drawer -->
+<div class="mobile-nav" [class.open]="showMobileMenu" (click)="closeMobileMenu()">
+    <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="mobile-nav-link">
+        <span class="material-icons">dashboard</span> Overview
+    </a>
+    <a routerLink="/admin/products" routerLinkActive="active" class="mobile-nav-link">
+        <span class="material-icons">inventory_2</span> Products
+    </a>
+    <a routerLink="/admin/orders" routerLinkActive="active" class="mobile-nav-link">
+        <span class="material-icons">receipt_long</span> Orders
+    </a>
+    <a routerLink="/admin/users" routerLinkActive="active" class="mobile-nav-link">
+        <span class="material-icons">group</span> Users
+    </a>
+</div>
+
+
