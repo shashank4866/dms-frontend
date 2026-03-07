@@ -1,0 +1,46 @@
+<div class="page-wrapper">
+    <app-navbar></app-navbar>
+    <div class="page-content">
+        <h1 class="page-title">
+            <span class="material-icons">favorite</span>
+            My Wishlist
+        </h1>
+
+        <div *ngIf="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+
+        <div *ngIf="!loading && wishlistItems.length === 0" class="empty-state">
+            <span class="material-icons">favorite_border</span>
+            <p>Your wishlist is empty</p>
+            <small>Save products you love to find them easily later</small>
+            <a routerLink="/home" class="btn-shop">Browse Products</a>
+        </div>
+
+        <div class="wishlist-grid" *ngIf="!loading && wishlistItems.length > 0">
+            <div class="wishlist-card" *ngFor="let item of wishlistItems">
+                <div class="card-image">
+                    <img [src]="item.image_url || 'https://placehold.co/260x180?text=P'" [alt]="item.name"
+                        onerror="this.src='https://placehold.co/260x180?text=P'" />
+                    <button class="remove-fab" (click)="removeFromWishlist(item.id)" title="Remove">
+                        <span class="material-icons">close</span>
+                    </button>
+                </div>
+                <div class="card-info">
+                    <span class="category-pill">{{ item.category }}</span>
+                    <h3>{{ item.name }}</h3>
+                    <div class="price">${{ item.price }}</div>
+                    <button class="move-to-cart-btn" (click)="moveToCart(item)">
+                        <span class="material-icons">add_shopping_cart</span>
+                        Move to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="toast" class="toast" [class.success]="toastType === 'success'" [class.error]="toastType === 'error'">
+        <span class="material-icons">{{ toastType === 'success' ? 'check_circle' : 'error' }}</span>
+        {{ toast }}
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="page-wrapper">
+    <app-navbar></app-navbar>
+
+    <div *ngIf="loading" class="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <div *ngIf="!loading && product" class="detail-layout">
+        <button class="back-btn" (click)="goBack()">
+            <span class="material-icons">arrow_back</span> Back to products
+        </button>
+
+        <div class="detail-card">
+            <div class="detail-image">
+                <img [src]="product.image_url || 'https://placehold.co/500x400?text=Product'" [alt]="product.name"
+                    onerror="this.src='https://placehold.co/500x400?text=Product'" />
+            </div>
+
+            <div class="detail-info">
+                <span class="category-pill">{{ product.category }}</span>
+                <h1>{{ product.name }}</h1>
+
+                <div class="detail-rating">
+                    <span class="stars">{{ getStars() }}</span>
+                    <span class="rating-text">4.5 (128 reviews)</span>
+                </div>
+
+                <div class="price-row">
+                    <span class="detail-price">${{ product.price }}</span>
+                    <span class="free-delivery">
+                        <span class="material-icons">local_shipping</span>
+                        Free delivery
+                    </span>
+                </div>
+
+                <p class="description">{{ product.description || 'Premium quality product with excellent features and
+                    durability. Perfect for everyday use.' }}</p>
+
+                <div class="stock-info" [class.low-stock]="product.stock <= 5" [class.no-stock]="product.stock === 0">
+                    <span class="material-icons">{{ product.stock > 0 ? 'inventory' : 'remove_shopping_cart' }}</span>
+                    <span>{{ product.stock > 0 ? 'In Stock (' + product.stock + ' available)' : 'Out of Stock' }}</span>
+                </div>
+
+                <div class="detail-actions">
+                    <button class="btn-cart" (click)="addToCart()" [disabled]="product.stock === 0">
+                        <span class="material-icons">add_shopping_cart</span>
+                        Add to Cart
+                    </button>
+                    <button class="btn-wishlist" (click)="addToWishlist()">
+                        <span class="material-icons">favorite_border</span>
+                        Wishlist
+                    </button>
+                </div>
+
+                <div class="features">
+                    <div class="feature-item">
+                        <span class="material-icons">verified_user</span>
+                        <span>1 Year Warranty</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="material-icons">replay</span>
+                        <span>30-Day Returns</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="material-icons">support_agent</span>
+                        <span>24/7 Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="toast" class="toast" [class.success]="toastType === 'success'" [class.error]="toastType === 'error'">
+        <span class="material-icons">{{ toastType === 'success' ? 'check_circle' : 'error' }}</span>
+        {{ toast }}
+    </div>
+</div>

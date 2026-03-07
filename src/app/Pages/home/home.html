@@ -1,0 +1,106 @@
+<div class="page-wrapper">
+    <app-navbar></app-navbar>
+
+    <div class="home-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Filters</h3>
+
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <div class="category-list">
+                        <label *ngFor="let cat of categories" class="category-item"
+                            [class.active]="selectedCategory === cat" (click)="selectCategory(cat)">
+                            <input type="radio" [checked]="selectedCategory === cat" (change)="selectCategory(cat)" />
+                            {{ cat }}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Price Range</label>
+                    <input type="range" [(ngModel)]="maxPrice" min="0" max="2000" step="50" (input)="applyFilters()"
+                        class="price-slider" />
+                    <div class="price-range-labels">
+                        <span>$0</span>
+                        <span class="max-price">${{ maxPrice }}</span>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Sort By</label>
+                    <select [(ngModel)]="sortBy" (change)="applyFilters()" class="sort-select">
+                        <option value="default">Default</option>
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                        <option value="name">Name A-Z</option>
+                    </select>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="products-main">
+            <div class="products-header">
+                <div>
+                    <h2 class="products-title">{{ selectedCategory }}</h2>
+                    <p class="products-count">Showing {{ filteredProducts.length }} products</p>
+                </div>
+            </div>
+
+            <div *ngIf="loading" class="loading">
+                <div class="spinner"></div>
+            </div>
+
+            <div *ngIf="!loading && filteredProducts.length === 0" class="empty-state">
+                <span class="material-icons">search_off</span>
+                <p>No products found</p>
+                <small>Try a different filter or search term</small>
+            </div>
+
+            <div class="products-grid" *ngIf="!loading">
+                <div class="product-card" *ngFor="let product of filteredProducts" (click)="goToProduct(product.id)">
+                    <div class="product-image-wrapper">
+                        <img [src]="getImageFallback(product.image_url)" [alt]="product.name"
+                            onerror="this.src='https://placehold.co/300x200?text=Product'" />
+                        <div class="product-actions">
+                            <button class="action-btn" (click)="addToWishlist($event, product)" title="Add to Wishlist">
+                                <span class="material-icons">favorite_border</span>
+                            </button>
+                            <button class="action-btn" title="Share">
+                                <span class="material-icons">share</span>
+                            </button>
+                        </div>
+                        <div class="stock-badge" *ngIf="product.stock <= 5 && product.stock > 0">
+                            Only {{ product.stock }} left!
+                        </div>
+                        <div class="out-of-stock" *ngIf="product.stock === 0">Out of Stock</div>
+                    </div>
+
+                    <div class="product-info">
+                        <span class="category-pill">{{ product.category }}</span>
+                        <h3>{{ product.name }}</h3>
+                        <div class="product-rating">
+                            <span class="stars">{{ getStars(4.5) }}</span>
+                            <span class="rating-count">(4.5)</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="price">${{ product.price }}</span>
+                            <button class="add-btn" (click)="addToCart($event, product)"
+                                [disabled]="product.stock === 0">
+                                <span class="material-icons">add_shopping_cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div *ngIf="toast" class="toast" [class.success]="toastType === 'success'" [class.error]="toastType === 'error'">
+        <span class="material-icons">{{ toastType === 'success' ? 'check_circle' : 'error' }}</span>
+        {{ toast }}
+    </div>
+</div>

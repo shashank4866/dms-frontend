@@ -1,0 +1,87 @@
+<div class="admin-page">
+    <app-admin-navbar></app-admin-navbar>
+
+    <div class="admin-content">
+        <div class="admin-header-row">
+            <h1>Dashboard Overview</h1>
+            <span class="date-label">ShopHub Admin</span>
+        </div>
+
+        <div *ngIf="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+
+        <div *ngIf="!loading">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card purple">
+                    <div class="stat-icon"><span class="material-icons">inventory_2</span></div>
+                    <div class="stat-info">
+                        <div class="stat-value">{{ products.length }}</div>
+                        <div class="stat-label">Total Products</div>
+                    </div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-icon"><span class="material-icons">warning</span></div>
+                    <div class="stat-info">
+                        <div class="stat-value">{{ lowStockProducts.length }}</div>
+                        <div class="stat-label">Low Stock Items</div>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon"><span class="material-icons">storefront</span></div>
+                    <div class="stat-info">
+                        <div class="stat-value">{{ products.length }}</div>
+                        <div class="stat-label">Active Listings</div>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon"><span class="material-icons">category</span></div>
+                    <div class="stat-info">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="section-header">
+                <h2>Product Inventory</h2>
+                <a routerLink="/admin/products" class="view-all-btn">
+                    <span class="material-icons">open_in_new</span> Manage
+                </a>
+            </div>
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let p of products.slice(0, 6)">
+                            <td class="product-cell">
+                                <img [src]="p.image_url || 'https://placehold.co/44x44?text=P'" [alt]="p.name"
+                                    onerror="this.src='https://placehold.co/44x44?text=P'" class="product-thumb" />
+                                <span>{{ p.name }}</span>
+                            </td>
+                            <td><span class="category-pill">{{ p.category }}</span></td>
+                            <td class="price">${{ p.price }}</td>
+                            <td>{{ p.stock }}</td>
+                            <td>
+                                <span
+                                    [class]="p.stock > 5 ? 'stock-badge in' : p.stock > 0 ? 'stock-badge low' : 'stock-badge out'">
+                                    {{ p.stock > 5 ? 'In Stock' : p.stock > 0 ? 'Low Stock' : 'Out of Stock' }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

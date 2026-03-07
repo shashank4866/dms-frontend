@@ -1,0 +1,32 @@
+<div class="page-wrapper">
+    <app-navbar></app-navbar>
+    <div class="page-content">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="avatar-large">{{ getInitials() }}</div>
+                <div class="profile-names">
+                    <h2>{{ user?.name }}</h2>
+                    <p>Customer Account</p>
+                </div>
+            </div>
+            <div class="profile-body">
+                <div class="info-row">
+                    <div class="info-label"><span class="material-icons">person</span> Full Name</div>
+                    <div class="info-value">{{ user?.name }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label"><span class="material-icons">email</span> Email</div>
+                    <div class="info-value">{{ user?.email }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label"><span class="material-icons">phone</span> Phone</div>
+                    <div class="info-value">{{ user?.phone || 'Not set' }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label"><span class="material-icons">badge</span> Role</div>
+                    <div class="info-value"><span class="role-badge">{{ user?.role }}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

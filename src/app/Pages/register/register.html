@@ -1,0 +1,84 @@
+<div class="auth-page">
+    <div class="auth-left">
+        <div class="auth-brand">
+            <div class="brand-icon">
+                <span class="material-icons">shopping_bag</span>
+            </div>
+            <h1>ShopHub</h1>
+            <p>Join thousands of happy customers</p>
+        </div>
+        <div class="perks">
+            <div class="perk"><span class="material-icons">check_circle</span> Free delivery on first order</div>
+            <div class="perk"><span class="material-icons">check_circle</span> Real-time order tracking</div>
+            <div class="perk"><span class="material-icons">check_circle</span> Exclusive member discounts</div>
+            <div class="perk"><span class="material-icons">check_circle</span> 24/7 customer support</div>
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h2>Create Account</h2>
+                <p>Fill in the details below to get started</p>
+            </div>
+
+            <div *ngIf="error" class="error-banner">
+                <span class="material-icons">error_outline</span>
+                {{ error }}
+            </div>
+            <div *ngIf="success" class="success-banner">
+                <span class="material-icons">check_circle</span>
+                {{ success }}
+            </div>
+
+            <form (ngSubmit)="register()" class="auth-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <div class="input-wrapper">
+                            <span class="material-icons">person</span>
+                            <input type="text" [(ngModel)]="name" name="name" placeholder="John Doe" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <div class="input-wrapper">
+                            <span class="material-icons">phone</span>
+                            <input type="tel" [(ngModel)]="phone" name="phone" placeholder="+1 234 567 8900" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="input-wrapper">
+                        <span class="material-icons">email</span>
+                        <input type="email" [(ngModel)]="email" name="email" placeholder="john@example.com" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <span class="material-icons">lock</span>
+                        <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password"
+                            placeholder="Create a strong password" required />
+                        <span class="material-icons toggle-pass" (click)="showPassword = !showPassword">
+                            {{ showPassword ? 'visibility_off' : 'visibility' }}
+                        </span>
+                    </div>
+                </div>
+
+                <button type="submit" class="auth-btn" [disabled]="loading">
+                    <span *ngIf="loading" class="btn-spinner"></span>
+                    <span class="material-icons" *ngIf="!loading">person_add</span>
+                    {{ loading ? 'Creating account...' : 'Create Account' }}
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a routerLink="/login">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+</div>

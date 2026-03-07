@@ -1,0 +1,95 @@
+<div class="admin-page">
+    <app-admin-navbar></app-admin-navbar>
+    <div class="admin-content">
+        <div class="admin-header-row">
+            <h1>Product Management</h1>
+            <button class="add-btn" (click)="showForm = !showForm">
+                <span class="material-icons">{{ showForm ? 'close' : 'add' }}</span>
+                {{ showForm ? 'Cancel' : 'Add Product' }}
+            </button>
+        </div>
+
+        <!-- Add Product Form -->
+        <div class="form-panel" *ngIf="showForm">
+            <h3>Add New Product</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Product Name *</label>
+                    <input type="text" [(ngModel)]="newProduct.name" placeholder="e.g. Wireless Headphones" />
+                </div>
+                <div class="form-group">
+                    <label>Category *</label>
+                    <select [(ngModel)]="newProduct.category">
+                        <option value="">Select category</option>
+                        <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price ($) *</label>
+                    <input type="number" [(ngModel)]="newProduct.price" placeholder="0.00" min="0" />
+                </div>
+                <div class="form-group">
+                    <label>Stock Quantity</label>
+                    <input type="number" [(ngModel)]="newProduct.stock" placeholder="0" min="0" />
+                </div>
+                <div class="form-group full-width">
+                    <label>Image URL</label>
+                    <input type="file" (change)="onFileSelected($event)" />
+                </div>
+                <div class="form-group full-width">
+                    <label>Description</label>
+                    <textarea [(ngModel)]="newProduct.description" placeholder="Product description..."
+                        rows="3"></textarea>
+                </div>
+            </div>
+            <button class="submit-btn" (click)="addProduct()" [disabled]="submitting">
+                <span *ngIf="submitting" class="btn-spinner"></span>
+                <span class="material-icons" *ngIf="!submitting">save</span>
+                {{ submitting ? 'Saving...' : 'Save Product' }}
+            </button>
+        </div>
+
+        <div *ngIf="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+
+        <div class="table-card" *ngIf="!loading">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of products">
+                        <td class="product-cell">
+                            <img [src]="p.image_url" [alt]="p.name" class="product-thumb" />
+                            <div>
+                                <div class="p-name">{{ p.name }}</div>
+                                <div class="p-desc">{{ p.description?.substring(0,50) }}...</div>
+                            </div>
+                        </td>
+                        <td><span class="category-pill">{{ p.category }}</span></td>
+                        <td class="price">${{ p.price }}</td>
+                        <td>{{ p.stock }}</td>
+                        <td>
+                            <span
+                                [class]="p.stock > 5 ? 'stock-badge in' : p.stock > 0 ? 'stock-badge low' : 'stock-badge out'">
+                                {{ p.stock > 5 ? 'In Stock' : p.stock > 0 ? 'Low' : 'Out' }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="toast" class="toast" [class.success]="toastType === 'success'" [class.error]="toastType === 'error'">
+        <span class="material-icons">{{ toastType === 'success' ? 'check_circle' : 'error' }}</span>
+        {{ toast }}
+    </div>
+</div>

@@ -1,0 +1,204 @@
+.page-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1A1A2E;
+    margin-bottom: 28px;
+}
+
+.page-title .material-icons {
+    color: #7F3DFF;
+    font-size: 30px;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px;
+}
+
+.spinner {
+    width: 44px;
+    height: 44px;
+    border: 3px solid #E5E7EB;
+    border-top-color: #7F3DFF;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px;
+    gap: 12px;
+    color: #9CA3AF;
+}
+
+.empty-state .material-icons {
+    font-size: 64px;
+    color: #D1D5DB;
+}
+
+.empty-state p {
+    font-size: 20px;
+    font-weight: 600;
+    color: #6B7280;
+}
+
+.orders-table-wrapper {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border: 1px solid #F3F4F6;
+    overflow: hidden;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders-table thead th {
+    background: #F9FAFB;
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6B7280;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.orders-table tbody tr {
+    border-bottom: 1px solid #F3F4F6;
+    transition: background 0.15s;
+}
+
+.orders-table tbody tr:hover {
+    background: #FAFAFA;
+}
+
+.orders-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.orders-table td {
+    padding: 16px;
+    font-size: 14px;
+    color: #374151;
+    vertical-align: middle;
+}
+
+.order-id {
+    font-weight: 700;
+    color: #7F3DFF;
+}
+
+.product-name {
+    font-weight: 500;
+    color: #1A1A2E;
+    max-width: 200px;
+}
+
+.price {
+    font-weight: 700;
+    color: #1A1A2E;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-badge .material-icons {
+    font-size: 14px;
+}
+
+.badge-primary {
+    background: #F3EEFF;
+    color: #7F3DFF;
+}
+
+.badge-success {
+    background: #E8F5E9;
+    color: #28A745;
+}
+
+.badge-warning {
+    background: #FFF8E1;
+    color: #856404;
+}
+
+.badge-info {
+    background: #E3F2FD;
+    color: #1565C0;
+}
+
+/* Progress Steps */
+.progress-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.step {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #E5E7EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F9FAFB;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.step.done {
+    background: #7F3DFF;
+    border-color: #7F3DFF;
+}
+
+.step.done .material-icons {
+    color: #fff;
+}
+
+.step .material-icons {
+    font-size: 14px;
+    color: #9CA3AF;
+}
+
+.step-line {
+    flex: 1;
+    height: 2px;
+    background: #E5E7EB;
+    min-width: 20px;
+    transition: background 0.2s;
+}
+
+.step-line.done {
+    background: #7F3DFF;
+}

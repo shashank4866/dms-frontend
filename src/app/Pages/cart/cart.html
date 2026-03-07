@@ -1,0 +1,73 @@
+<div class="page-wrapper">
+    <app-navbar></app-navbar>
+    <div class="page-content">
+        <h1 class="page-title">
+            <span class="material-icons">shopping_cart</span>
+            Shopping Cart
+        </h1>
+
+        <div *ngIf="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+
+        <div *ngIf="!loading && cartItems.length === 0" class="empty-state">
+            <span class="material-icons">remove_shopping_cart</span>
+            <p>Your cart is empty</p>
+            <small>Add some products to get started</small>
+            <a routerLink="/home" class="btn-shop">Start Shopping</a>
+        </div>
+
+        <div *ngIf="!loading && cartItems.length > 0" class="cart-layout">
+            <div class="cart-items">
+                <div class="cart-item" *ngFor="let item of cartItems">
+                    <div class="item-image">
+                        <img [src]="item.image_url || 'https://placehold.co/80x80?text=P'" [alt]="item.name"
+                            onerror="this.src='https://placehold.co/80x80?text=P'" />
+                    </div>
+                    <div class="item-details">
+                        <h3>{{ item.name }}</h3>
+                        <span class="item-category">{{ item.category }}</span>
+                    </div>
+                    <div class="item-price">${{ item.price }}</div>
+                    <button class="remove-btn" (click)="removeItem(item.id)">
+                        <span class="material-icons">delete_outline</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <div class="summary-card">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal ({{ cartItems.length }} items)</span>
+                        <span>${{ subtotal.toFixed(2) }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span class="free" *ngIf="shipping === 0">Free</span>
+                        <span *ngIf="shipping > 0">${{ shipping.toFixed(2) }}</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>${{ total.toFixed(2) }}</span>
+                    </div>
+                    <button class="place-order-btn" (click)="placeAllOrders()" [disabled]="placingOrder">
+                        <span *ngIf="placingOrder" class="btn-spinner"></span>
+                        <span class="material-icons" *ngIf="!placingOrder">shopping_bag</span>
+                        {{ placingOrder ? 'Placing Order...' : 'Place Order' }}
+                    </button>
+                    <div class="secure-note">
+                        <span class="material-icons">lock</span>
+                        Secure checkout
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="toast" class="toast" [class.success]="toastType === 'success'" [class.error]="toastType === 'error'">
+        <span class="material-icons">{{ toastType === 'success' ? 'check_circle' : 'error' }}</span>
+        {{ toast }}
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="page-wrapper">
+    <app-navbar></app-navbar>
+    <div class="page-content">
+        <h1 class="page-title">
+            <span class="material-icons">receipt_long</span>
+            Order History
+        </h1>
+
+        <div *ngIf="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+
+        <div *ngIf="!loading && orders.length === 0" class="empty-state">
+            <span class="material-icons">receipt_long</span>
+            <p>No orders yet</p>
+            <small>Place your first order to see it here</small>
+        </div>
+
+        <div class="orders-table-wrapper" *ngIf="!loading && orders.length > 0">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Progress</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders">
+                        <td class="order-id">#{{ order.id }}</td>
+                        <td class="product-name">{{ order.product_name }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td class="price">${{ order.total_price }}</td>
+                        <td>
+                            <span class="status-badge" [ngClass]="getStatusClass(order.order_status)">
+                                <span class="material-icons">{{ getStatusIcon(order.order_status) }}</span>
+                                {{ order.order_status || 'Placed' }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="progress-steps">
+                                <div class="step" [class.done]="true" title="Placed">
+                                    <span class="material-icons">shopping_bag</span>
+                                </div>
+                                <div class="step-line"
+                                    [class.done]="['packed','shipped','delivered'].includes((order.order_status||'').toLowerCase())">
+                                </div>
+                                <div class="step"
+                                    [class.done]="['packed','shipped','delivered'].includes((order.order_status||'').toLowerCase())"
+                                    title="Packed">
+                                    <span class="material-icons">inventory_2</span>
+                                </div>
+                                <div class="step-line"
+                                    [class.done]="['shipped','delivered'].includes((order.order_status||'').toLowerCase())">
+                                </div>
+                                <div class="step"
+                                    [class.done]="['shipped','delivered'].includes((order.order_status||'').toLowerCase())"
+                                    title="Shipped">
+                                    <span class="material-icons">local_shipping</span>
+                                </div>
+                                <div class="step-line"
+                                    [class.done]="(order.order_status||'').toLowerCase() === 'delivered'"></div>
+                                <div class="step" [class.done]="(order.order_status||'').toLowerCase() === 'delivered'"
+                                    title="Delivered">
+                                    <span class="material-icons">check_circle</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

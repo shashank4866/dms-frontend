@@ -1,0 +1,54 @@
+<div class="admin-page">
+    <app-admin-navbar></app-admin-navbar>
+    <div class="admin-content">
+        <div class="admin-header-row">
+            <h1>User Management</h1>
+            <span class="user-count" *ngIf="!loading">{{ users.length }} Users Found</span>
+        </div>
+
+        <div *ngIf="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+
+        <div class="table-card" *ngIf="!loading && users.length > 0">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Contact</th>
+                        <th>Role</th>
+                        <th>Orders</th>
+                        <th>Total Spent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td class="user-cell">
+                            <div class="user-avatar">{{ getInitials(user.name) }}</div>
+                            <div>
+                                <div class="u-name">{{ user.name }}</div>
+                                <div class="u-id">ID: #{{ user.id }}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>{{ user.email }}</div>
+                            <div class="sub-text">{{ user.phone || 'No phone' }}</div>
+                        </td>
+                        <td>
+                            <span class="user-role" [class.admin]="user.role === 'admin'">
+                                {{ user.role }}
+                            </span>
+                        </td>
+                        <td>{{ user.total_orders }}</td>
+                        <td class="price">${{ user.total_spent }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="!loading && users.length === 0" class="empty-state">
+            <span class="material-icons">group</span>
+            <p>No users found</p>
+        </div>
+    </div>
+</div>

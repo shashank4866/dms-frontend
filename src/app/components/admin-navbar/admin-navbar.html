@@ -1,0 +1,32 @@
+<header class="admin-header">
+    <div class="admin-brand">
+        <div class="brand-icon">
+            <span class="material-icons">dashboard</span>
+        </div>
+        <span>Admin Dashboard</span>
+    </div>
+
+    <nav class="admin-nav">
+        <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+            <span class="material-icons">dashboard</span> Overview
+        </a>
+        <a routerLink="/admin/products" routerLinkActive="active" class="nav-link">
+            <span class="material-icons">inventory_2</span> Products
+        </a>
+        <a routerLink="/admin/orders" routerLinkActive="active" class="nav-link">
+            <span class="material-icons">receipt_long</span> Orders
+        </a>
+        <a routerLink="/admin/users" routerLinkActive="active" class="nav-link">
+            <span class="material-icons">group</span> Users
+        </a>
+    </nav>
+
+    <div class="admin-right">
+        <span class="admin-badge">Admin</span>
+        <span class="admin-name">{{ user?.name }}</span>
+        <button class="logout-btn" (click)="logout()">
+            <span class="material-icons">logout</span>
+            Logout
+        </button>
+    </div>
+</header>

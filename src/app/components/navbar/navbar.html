@@ -1,0 +1,55 @@
+<nav class="navbar">
+    <div class="nav-left">
+        <a routerLink="/home" class="nav-brand">
+            <div class="brand-icon">
+                <span class="material-icons">shopping_bag</span>
+            </div>
+            <span>ShopHub</span>
+        </a>
+    </div>
+
+    <div class="nav-center">
+        <div class="search-bar">
+            <span class="material-icons">search</span>
+            <input type="text" [(ngModel)]="searchQuery" placeholder="Search for products..."
+                (keyup.enter)="search()" />
+        </div>
+    </div>
+
+    <div class="nav-right">
+        <a routerLink="/wishlist" class="nav-icon-btn" title="Wishlist">
+            <span class="material-icons">favorite_border</span>
+            <span class="badge-count" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
+        </a>
+
+        <a routerLink="/cart" class="nav-icon-btn" title="Cart">
+            <span class="material-icons">shopping_cart</span>
+            <span class="badge-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+        </a>
+
+        <div class="user-menu">
+            <button class="nav-icon-btn user-btn" (click)="toggleDropdown()">
+                <div class="avatar">{{ user?.name?.charAt(0)?.toUpperCase() || 'U' }}</div>
+                <span class="material-icons chevron">expand_more</span>
+            </button>
+
+            <div class="dropdown" *ngIf="showDropdown" (click)="showDropdown = false">
+                <div class="dropdown-header">
+                    <strong>{{ user?.name }}</strong>
+                    <span>{{ user?.email }}</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a routerLink="/profile" class="dropdown-item">
+                    <span class="material-icons">person</span> My Profile
+                </a>
+                <a routerLink="/orders" class="dropdown-item">
+                    <span class="material-icons">receipt_long</span> My Orders
+                </a>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item logout-item" (click)="logout()">
+                    <span class="material-icons">logout</span> Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>

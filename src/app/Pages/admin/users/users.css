@@ -1,0 +1,157 @@
+.admin-page {
+    min-height: 100vh;
+    background: #F0F2F5;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-content {
+    flex: 1;
+    padding: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.admin-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.admin-header-row h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1A1A2E;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px;
+}
+
+.spinner {
+    width: 44px;
+    height: 44px;
+    border: 3px solid #E5E7EB;
+    border-top-color: #7F3DFF;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.table-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid #F3F4F6;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background: #F9FAFB;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6B7280;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+tbody tr {
+    border-bottom: 1px solid #F3F4F6;
+    transition: background 0.15s;
+}
+
+tbody tr:hover {
+    background: #FAFAFA;
+}
+
+td {
+    padding: 16px;
+    font-size: 14px;
+    color: #374151;
+    vertical-align: middle;
+}
+
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #7F3DFF, #5B00D5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.u-name {
+    font-weight: 600;
+    color: #1A1A2E;
+}
+
+.u-id {
+    font-size: 11px;
+    color: #9CA3AF;
+}
+
+.sub-text {
+    font-size: 12px;
+    color: #9CA3AF;
+}
+
+.price {
+    font-weight: 700;
+    color: #7F3DFF;
+}
+
+.user-role {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #F3F4F6;
+    color: #6B7280;
+}
+
+.user-role.admin {
+    background: #F3EEFF;
+    color: #7F3DFF;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px;
+    color: #9CA3AF;
+    gap: 10px;
+}
+
+.empty-state .material-icons {
+    font-size: 48px;
+}

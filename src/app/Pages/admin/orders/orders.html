@@ -1,0 +1,58 @@
+<div class="admin-page">
+    <app-admin-navbar></app-admin-navbar>
+    <div class="admin-content">
+        <div class="admin-header-row">
+            <h1>Order Management</h1>
+        </div>
+
+        <div *ngIf="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+
+        <div *ngIf="!loading && orders.length === 0" class="empty-state">
+            <span class="material-icons">receipt_long</span>
+            <p>No orders found</p>
+        </div>
+
+        <div class="table-card" *ngIf="!loading && orders.length > 0">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders">
+                        <td class="order-id">#{{ order.id }}</td>
+                        <td>{{ order.user_name }}</td>
+                        <td class="product-name">{{ order.product_name }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td class="price">${{ order.total_price }}</td>
+                        <td>
+                            <span class="status-badge" [ngClass]="getStatusClass(order.order_status)">
+                                {{ order.order_status || 'placed' }}
+                            </span>
+                        </td>
+                        <td>
+                            <select class="status-select" [(ngModel)]="order.order_status"
+                                (change)="updateStatus(order, order.order_status)">
+                                <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="toast" class="toast" [class.success]="toastType === 'success'" [class.error]="toastType === 'error'">
+        <span class="material-icons">{{ toastType === 'success' ? 'check_circle' : 'error' }}</span>
+        {{ toast }}
+    </div>
+</div>
