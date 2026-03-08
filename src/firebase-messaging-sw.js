@@ -56,16 +56,18 @@ messaging.onBackgroundMessage(payload => {
   saveNotificationToIndexedDB(payload);
 
   // Show browser notification
-  const notificationIcon = payload.notification.icon || 'https://dmsfrontend.netlify.app/assets/dmsnotifi.png';
+  const notificationIcon = payload.notification.icon || '/assets/dmsnotifi.png';
+  const notificationBadge = payload.notification.badge || '/assets/dmsicon.png';
 
   self.registration.showNotification(
     payload.notification.title || 'Delivery Management',
     {
       body: payload.notification.body || 'You have a new notification',
       icon: notificationIcon,
-      badge: 'https://dmsfrontend.netlify.app/assets/dmsnotifi.png',
+      badge: notificationBadge,
       tag: 'order-notification',
       requireInteraction: true,
+      vibrate: [200, 100, 200],
       data: {
         url: payload.data?.url || '/home',
         orderId: payload.data?.orderId || null
