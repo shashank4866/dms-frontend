@@ -166,6 +166,33 @@
     min-height: 60px;
 }
 
+/* Animation for steps filling */
+@keyframes fillStep {
+    0% {
+        background: #fff;
+        border-color: #E5E7EB;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        transform: scale(1);
+    }
+    100% {
+        background: linear-gradient(135deg, #7F3DFF 0%, #6B2FD8 100%);
+        border-color: #7F3DFF;
+        box-shadow: 0 2px 8px rgba(127, 61, 255, 0.3);
+        transform: scale(1.05);
+    }
+}
+
+/* Animation for connector lines filling */
+@keyframes fillLine {
+    0% {
+        background: linear-gradient(90deg, #E5E7EB 0%, #E5E7EB 100%);
+    }
+    100% {
+        background: linear-gradient(90deg, #7F3DFF 0%, #A78BFA 100%);
+        box-shadow: 0 1px 4px rgba(127, 61, 255, 0.25);
+    }
+}
+
 .step {
     width: 32px;
     height: 32px;
@@ -182,11 +209,21 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.step.done {
-    background: linear-gradient(135deg, #7F3DFF 0%, #6B2FD8 100%);
-    border-color: #7F3DFF;
-    box-shadow: 0 2px 8px rgba(127, 61, 255, 0.3);
-    transform: scale(1.05);
+/* Apply animation to done steps based on their position */
+.step.done:nth-child(1) {
+    animation: fillStep 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+}
+
+.step.done:nth-child(3) {
+    animation: fillStep 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+}
+
+.step.done:nth-child(5) {
+    animation: fillStep 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
+}
+
+.step.done:nth-child(7) {
+    animation: fillStep 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
 }
 
 .step.done .material-icons {
@@ -205,18 +242,21 @@
     height: 3px;
     background: linear-gradient(90deg, #E5E7EB 0%, #E5E7EB 100%);
     min-width: 20px;
-    transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     z-index: 1;
 }
 
-.step-line.done {
-    background: linear-gradient(90deg, #7F3DFF 0%, #A78BFA 100%);
-    box-shadow: 0 1px 4px rgba(127, 61, 255, 0.25);
+/* Apply animation to done lines based on their position */
+.step-line.done:nth-child(2) {
+    animation: fillLine 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.35s forwards;
 }
 
-.step-line.done {
-    background: #7F3DFF;
+.step-line.done:nth-child(4) {
+    animation: fillLine 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.75s forwards;
+}
+
+.step-line.done:nth-child(6) {
+    animation: fillLine 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.15s forwards;
 }
 
 /* ─── MOBILE RESPONSIVE ─────────────────────────────── */
