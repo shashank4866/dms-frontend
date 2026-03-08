@@ -11,6 +11,29 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
+// messaging.onBackgroundMessage(payload => {
+//   self.registration.showNotification(
+//     payload.notification.title,
+//     {
+//       body: payload.notification.body
+//     }
+//   );
+// });
+
+
+// Show background notification
+messaging.onBackgroundMessage(payload => {
+  self.registration.showNotification(
+    payload.notification.title,
+    {
+      body: payload.notification.body,
+      data: {
+        url: payload.data?.url || '/home'
+      }
+    }
+  );
+});
+
 // 🔥 Store message in IndexedDB (Background)
 function saveNotificationToIndexedDB(payload) {
   const dbName = 'DeliveryManagementDB';
@@ -50,27 +73,18 @@ function saveNotificationToIndexedDB(payload) {
   };
 }
 
-// Show background notification with icon
+// Show background notification
 messaging.onBackgroundMessage(payload => {
   // Save to IndexedDB
   saveNotificationToIndexedDB(payload);
 
   // Show browser notification
-  const notificationIcon = payload.notification.icon || '/assets/dmsnotifi.png';
-  const notificationBadge = payload.notification.badge || '/assets/dmsicon.png';
-
   self.registration.showNotification(
-    payload.notification.title || 'Delivery Management',
+    payload.notification.title,
     {
-      body: payload.notification.body || 'You have a new notification',
-      icon: notificationIcon,
-      badge: notificationBadge,
-      tag: 'order-notification',
-      requireInteraction: true,
-      vibrate: [200, 100, 200],
+      body: payload.notification.body,
       data: {
-        url: payload.data?.url || '/home',
-        orderId: payload.data?.orderId || null
+        url: payload.data?.url || '/home'
       }
     }
   );
