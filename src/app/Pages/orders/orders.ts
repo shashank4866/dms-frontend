@@ -23,7 +23,7 @@ export class Orders implements OnInit, OnDestroy {
     ngOnInit() {
         this.user = this.auth.getUser();
         this.fetchOrders();
-        
+
         // Listen for order updates from notifications
         this.api.orderUpdated$
             .pipe(takeUntil(this.destroy$))
