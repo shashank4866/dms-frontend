@@ -11,29 +11,6 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// messaging.onBackgroundMessage(payload => {
-//   self.registration.showNotification(
-//     payload.notification.title,
-//     {
-//       body: payload.notification.body
-//     }
-//   );
-// });
-
-
-// Show background notification
-messaging.onBackgroundMessage(payload => {
-  self.registration.showNotification(
-    payload.notification.title,
-    {
-      body: payload.notification.body,
-      data: {
-        url: payload.data?.url || '/home'
-      }
-    }
-  );
-});
-
 // 🔥 Store message in IndexedDB (Background)
 function saveNotificationToIndexedDB(payload) {
   const dbName = 'DeliveryManagementDB';
@@ -73,22 +50,28 @@ function saveNotificationToIndexedDB(payload) {
   };
 }
 
-// Show background notification
+// Show background notification with icon
 messaging.onBackgroundMessage(payload => {
   // Save to IndexedDB
   saveNotificationToIndexedDB(payload);
 
   // Show browser notification
-self.registration.showNotification(
-  payload.notification.title,
-  {
-    body: payload.notification.body,
-    icon: "https://dmsfrontend.netlify.app/assets/dmsnotifi.png",
-    data: {
-      url: payload.data?.url || "/home"
+  const notificationIcon = payload.notification.icon || 'https://dmsfrontend.netlify.app/assets/dmsnotifi.png';
+
+  self.registration.showNotification(
+    payload.notification.title || 'Delivery Management',
+    {
+      body: payload.notification.body || 'You have a new notification',
+      icon: notificationIcon,
+      badge: 'https://dmsfrontend.netlify.app/assets/dmsnotifi.png',
+      tag: 'order-notification',
+      requireInteraction: true,
+      data: {
+        url: payload.data?.url || '/home',
+        orderId: payload.data?.orderId || null
+      }
     }
-  }
-);
+  );
 });
 
 // 🔥 Handle notification click
