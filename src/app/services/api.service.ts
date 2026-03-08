@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 // local
 // const BASE = 'http://localhost:3002';
 // prod
 const BASE = 'https://dms-backend-pm4s.onrender.com';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
+  orderUpdated$ = new Subject<void>();
+
   constructor(private http: HttpClient) { }
 
   // Auth

@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environment';
 import { ToastService } from './toast.service';
 import { NotificationStorageService } from './notification-storage.service';
+import { ApiService } from './api.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,13 @@ export class FcmService {
 
 
 
-  constructor(private http: HttpClient, private toast: ToastService, private notificationStorage: NotificationStorageService) {
+  constructor(
+    private http: HttpClient,
+    private toast: ToastService,
+    private notificationStorage: NotificationStorageService,
+    private api: ApiService,
+    private auth: AuthService
+  ) {
     initializeApp(environment.firebase);
 
   }
@@ -54,7 +62,30 @@ export class FcmService {
 
       // Show toast in-app
       this.toast.show(body, title, 7000);
+
+      // Trigger order API for user
+      this.triggerOrderApi();
     });
+  }
+
+  private triggerOrderApi() {
+    try {
+      const user = this.auth.getUser();
+      if (user && user.id) {
+        this.api.getOrders(user.id).subscribe({
+          next: (res: any) => {
+            console.log('Orders updated after notification:', res);
+            // Notify all subscribers about order update
+            this.api.orderUpdated$.next();
+          },
+          error: (err) => {
+            console.error('Error fetching orders after notification:', err);
+          }
+        });
+      }
+    } catch (err) {
+      console.error('Error in triggerOrderApi:', err);
+    }
   }
 
   private playNotificationSound() {
