@@ -79,15 +79,16 @@ messaging.onBackgroundMessage(payload => {
   saveNotificationToIndexedDB(payload);
 
   // Show browser notification
-  self.registration.showNotification(
-    payload.notification.title,
-    {
-      body: payload.notification.body,
-      data: {
-        url: payload.data?.url || '/home'
-      }
+self.registration.showNotification(
+  payload.notification.title,
+  {
+    body: payload.notification.body,
+    icon: "https://dmsfrontend.netlify.app/assets/dmsnotifi.png",
+    data: {
+      url: payload.data?.url || "/home"
     }
-  );
+  }
+);
 });
 
 // 🔥 Handle notification click
