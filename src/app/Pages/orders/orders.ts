@@ -16,6 +16,7 @@ export class Orders implements OnInit, OnDestroy {
     orders: any[] = [];
     loading = true;
     user: any = null;
+    expandedOrderId: number | null = null;
     private destroy$ = new Subject<void>();
 
     constructor(private api: ApiService, private auth: AuthService) { }
@@ -37,6 +38,10 @@ export class Orders implements OnInit, OnDestroy {
             next: (res: any) => { this.orders = res.data || []; this.loading = false; },
             error: () => { this.loading = false; }
         });
+    }
+
+    toggleOrderDetails(orderId: number) {
+        this.expandedOrderId = this.expandedOrderId === orderId ? null : orderId;
     }
 
     getStatusClass(status: string): string {

@@ -22,6 +22,7 @@ export class Home implements OnInit {
     toastType = 'success';
     user_id:any;
     fcmToken='';
+    isMobileFiltersOpen = false;
 
     categories = ['All Products', 'Audio', 'Wearables', 'Computers', 'Photography', 'Mobile'];
     selectedCategory = 'All Products';
@@ -82,6 +83,13 @@ export class Home implements OnInit {
     selectCategory(cat: string) {
         this.selectedCategory = cat;
         this.applyFilters();
+        if (window.innerWidth <= 768) {
+            this.isMobileFiltersOpen = false;
+        }
+    }
+
+    toggleMobileFilters() {
+        this.isMobileFiltersOpen = !this.isMobileFiltersOpen;
     }
 
     getStars(rating: number = 4): string {

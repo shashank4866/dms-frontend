@@ -51,6 +51,9 @@
                         <p *ngIf="selectedFile">File selected: {{ selectedFile?.name }}</p>
                     </div>
                 </div>
+                <div *ngIf="fileError" style="color: #DC3545; font-size: 13px; margin-top: 8px; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+                    <span class="material-icons" style="font-size: 16px;">error_outline</span> {{ fileError }}
+                </div>
 
                 <div *ngIf="previewUrl" class="preview-section">
                     <p>Preview:</p>

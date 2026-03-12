@@ -88,11 +88,15 @@
 }
 
 .orders-table tbody tr {
-    border-bottom: 1px solid #F3F4F6;
     transition: background 0.15s;
 }
 
-.orders-table tbody tr:hover {
+.order-summary-row {
+    border-bottom: 1px solid #F3F4F6;
+    cursor: pointer;
+}
+
+.order-summary-row:hover {
     background: #FAFAFA;
 }
 
@@ -155,6 +159,42 @@
 .badge-info {
     background: #E3F2FD;
     color: #1565C0;
+}
+
+.toggle-cell {
+    text-align: right;
+    width: 40px;
+}
+
+.chevron {
+    color: #9CA3AF;
+    transition: transform 0.3s ease;
+}
+
+.chevron.expanded {
+    transform: rotate(180deg);
+}
+
+.expanded-row {
+    background-color: #FAFAFA;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.expanded-row td {
+    padding: 24px;
+}
+
+.progress-details-container {
+    padding: 16px 24px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #F3F4F6;
+}
+
+.progress-details-container h4 {
+    font-size: 16px;
+    color: #1A1A2E;
+    margin-bottom: 24px;
 }
 
 /* Progress Steps */

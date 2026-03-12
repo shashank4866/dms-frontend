@@ -3,7 +3,7 @@
 
     <div class="home-layout">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" [class.mobile-open]="isMobileFiltersOpen">
             <div class="sidebar-section">
                 <h3>Filters</h3>
 
@@ -47,6 +47,10 @@
                     <h2 class="products-title">{{ selectedCategory }}</h2>
                     <p class="products-count">Showing {{ filteredProducts.length }} products</p>
                 </div>
+                <button class="mobile-filter-btn" (click)="toggleMobileFilters()">
+                    <span class="material-icons">filter_list</span>
+                    <span>Filters</span>
+                </button>
             </div>
 
             <div *ngIf="loading" class="loading">

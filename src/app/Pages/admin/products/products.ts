@@ -21,6 +21,8 @@ export class AdminProducts implements OnInit {
     showEditForm = false;
     editingProduct: any = null;
     updatingProduct = false;
+    fileError: string | null = null;
+    editFileError: string | null = null;
 
     newProduct = { name: '', description: '', price: 0, stock: 0, category: '', image_url: '' };
     categories = ['Audio', 'Wearables', 'Computers', 'Photography', 'Mobile', 'Accessories'];
@@ -45,8 +47,14 @@ export class AdminProducts implements OnInit {
     }
 
     onFileSelected(event: any) {
+        this.fileError = null;
         const file = event.target.files[0];
         if (file) {
+            if (file.size > 200 * 1024) {
+                this.fileError = 'File size must be less than 200KB';
+                event.target.value = ''; // reset input
+                return;
+            }
             const reader = new FileReader();
             reader.onload = (e: any) => {
                 this.newProduct.image_url = e.target.result;
@@ -56,6 +64,7 @@ export class AdminProducts implements OnInit {
     }
 
     addProduct() {
+        if (this.fileError) return;
         if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.category) {
             this.showToast('Please fill in required fields', 'error'); return;
         }
@@ -80,11 +89,18 @@ export class AdminProducts implements OnInit {
     closeEditModal() {
         this.showEditForm = false;
         this.editingProduct = null;
+        this.editFileError = null;
     }
 
     onEditFileSelected(event: any) {
+        this.editFileError = null;
         const file = event.target.files[0];
         if (file) {
+            if (file.size > 200 * 1024) {
+                this.editFileError = 'File size must be less than 200KB';
+                event.target.value = ''; // reset input
+                return;
+            }
             const reader = new FileReader();
             reader.onload = (e: any) => {
                 this.editingProduct.image_url = e.target.result;
@@ -94,6 +110,7 @@ export class AdminProducts implements OnInit {
     }
 
     updateProduct() {
+        if (this.editFileError) return;
         if (!this.editingProduct.name || !this.editingProduct.price || !this.editingProduct.category) {
             this.showToast('Please fill in required fields', 'error'); return;
         }

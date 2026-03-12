@@ -20,6 +20,7 @@ export class Profile implements OnInit {
     selectedFile: File | null = null;
     previewUrl: string | null = null;
     isLoading = false;
+    fileError: string | null = null;
 
     constructor(
         private auth: AuthService,
@@ -40,21 +41,27 @@ export class Profile implements OnInit {
         if (!this.isEditing) {
             this.selectedFile = null;
             this.previewUrl = null;
+            this.fileError = null;
         }
     }
 
     onFileSelected(event: any): void {
+        this.fileError = null;
         const file: File = event.target.files[0];
         if (file) {
-            // Validate file size (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                this.toast.show('File size must be less than 5MB', 'Error', 5000);
+            // Validate file size (max 200KB)
+            if (file.size > 200 * 1024) {
+                this.fileError = 'File size must be less than 200KB';
+                this.selectedFile = null;
+                this.previewUrl = null;
                 return;
             }
 
             // Validate file type
             if (!file.type.startsWith('image/')) {
-                this.toast.show('Please select an image file', 'Error', 5000);
+                this.fileError = 'Please select an image file';
+                this.selectedFile = null;
+                this.previewUrl = null;
                 return;
             }
 
@@ -111,5 +118,6 @@ export class Profile implements OnInit {
         this.isEditing = false;
         this.selectedFile = null;
         this.previewUrl = null;
+        this.fileError = null;
     }
 }

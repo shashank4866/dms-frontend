@@ -25,11 +25,12 @@
                         <th>Qty</th>
                         <th>Total</th>
                         <th>Status</th>
-                        <th>Progress</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let order of orders">
+                    <ng-container *ngFor="let order of orders">
+                    <tr class="order-summary-row" (click)="toggleOrderDetails(order.id)">
                         <td class="order-id">#{{ order.id }}</td>
                         <td class="product-name">{{ order.product_name }}</td>
                         <td>{{ order.quantity }}</td>
@@ -40,36 +41,47 @@
                                 {{ order.order_status || 'Placed' }}
                             </span>
                         </td>
-                        <td>
-                            <div class="progress-steps">
-                                <div class="step" [class.done]="true" title="Placed">
-                                    <span class="material-icons">shopping_bag</span>
-                                </div>
-                                <div class="step-line"
-                                    [class.done]="['packed','shipped','delivered'].includes((order.order_status||'').toLowerCase())">
-                                </div>
-                                <div class="step"
-                                    [class.done]="['packed','shipped','delivered'].includes((order.order_status||'').toLowerCase())"
-                                    title="Packed">
-                                    <span class="material-icons">inventory_2</span>
-                                </div>
-                                <div class="step-line"
-                                    [class.done]="['shipped','delivered'].includes((order.order_status||'').toLowerCase())">
-                                </div>
-                                <div class="step"
-                                    [class.done]="['shipped','delivered'].includes((order.order_status||'').toLowerCase())"
-                                    title="Shipped">
-                                    <span class="material-icons">local_shipping</span>
-                                </div>
-                                <div class="step-line"
-                                    [class.done]="(order.order_status||'').toLowerCase() === 'delivered'"></div>
-                                <div class="step" [class.done]="(order.order_status||'').toLowerCase() === 'delivered'"
-                                    title="Delivered">
-                                    <span class="material-icons">check_circle</span>
+                        <td class="toggle-cell">
+                            <span class="material-icons chevron" [class.expanded]="expandedOrderId === order.id">
+                                expand_more
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="expanded-row" *ngIf="expandedOrderId === order.id">
+                        <td colspan="7">
+                            <div class="progress-details-container">
+                                <h4>Order Progress</h4>
+                                <div class="progress-steps">
+                                    <div class="step" [class.done]="true" title="Placed">
+                                        <span class="material-icons">shopping_bag</span>
+                                    </div>
+                                    <div class="step-line"
+                                        [class.done]="['packed','shipped','delivered'].includes((order.order_status||'').toLowerCase())">
+                                    </div>
+                                    <div class="step"
+                                        [class.done]="['packed','shipped','delivered'].includes((order.order_status||'').toLowerCase())"
+                                        title="Packed">
+                                        <span class="material-icons">inventory_2</span>
+                                    </div>
+                                    <div class="step-line"
+                                        [class.done]="['shipped','delivered'].includes((order.order_status||'').toLowerCase())">
+                                    </div>
+                                    <div class="step"
+                                        [class.done]="['shipped','delivered'].includes((order.order_status||'').toLowerCase())"
+                                        title="Shipped">
+                                        <span class="material-icons">local_shipping</span>
+                                    </div>
+                                    <div class="step-line"
+                                        [class.done]="(order.order_status||'').toLowerCase() === 'delivered'"></div>
+                                    <div class="step" [class.done]="(order.order_status||'').toLowerCase() === 'delivered'"
+                                        title="Delivered">
+                                        <span class="material-icons">check_circle</span>
+                                    </div>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                    </ng-container>
                 </tbody>
             </table>
         </div>

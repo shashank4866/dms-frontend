@@ -132,6 +132,29 @@
     margin-top: 2px;
 }
 
+.mobile-filter-btn {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #F3EEFF;
+    color: #7F3DFF;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.mobile-filter-btn:hover {
+    background: #E8D9FF;
+}
+
+.mobile-filter-btn .material-icons {
+    font-size: 18px;
+}
+
 .loading,
 .empty-state {
     display: flex;
@@ -408,14 +431,32 @@
 }
 
 @media (max-width: 768px) {
+    .mobile-filter-btn {
+        display: flex;
+    }
+
     .home-layout {
         flex-direction: column;
     }
 
     .sidebar {
+        display: none;
         width: 100%;
         height: auto;
         position: static;
+        padding: 16px;
+        border-right: none;
+        border-bottom: 1px solid #E5E7EB;
+    }
+
+    .sidebar.mobile-open {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     .products-main {
