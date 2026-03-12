@@ -157,6 +157,45 @@
     flex-shrink: 0;
 }
 
+.item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #F9FAFB;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #F3F4F6;
+}
+
+.item-quantity button {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    border: 1px solid #E5E7EB;
+    background: #fff;
+    color: #374151;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.item-quantity button:hover {
+    background: #7F3DFF;
+    color: #fff;
+    border-color: #7F3DFF;
+}
+
+.item-quantity span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    min-width: 16px;
+    text-align: center;
+}
+
 .remove-btn {
     width: 36px;
     height: 36px;

@@ -41,6 +41,12 @@
                     <span>{{ product.stock > 0 ? 'In Stock (' + product.stock + ' available)' : 'Out of Stock' }}</span>
                 </div>
 
+                <div class="quantity-selector" *ngIf="product.stock > 0">
+                    <button class="qty-btn" (click)="decreaseQuantity()" [disabled]="quantity <= 1">-</button>
+                    <span class="qty-display">{{ quantity }}</span>
+                    <button class="qty-btn" (click)="increaseQuantity()" [disabled]="quantity >= product.stock">+</button>
+                </div>
+
                 <div class="detail-actions">
                     <button class="btn-cart" (click)="addToCart()" [disabled]="product.stock === 0">
                         <span class="material-icons">add_shopping_cart</span>

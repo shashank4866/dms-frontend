@@ -17,6 +17,10 @@ export class AdminProducts implements OnInit {
     toast = '';
     toastType = 'success';
     submitting = false;
+    editingStockId: number | null = null;
+    showEditForm = false;
+    editingProduct: any = null;
+    updatingProduct = false;
 
     newProduct = { name: '', description: '', price: 0, stock: 0, category: '', image_url: '' };
     categories = ['Audio', 'Wearables', 'Computers', 'Photography', 'Mobile', 'Accessories'];
@@ -65,6 +69,69 @@ export class AdminProducts implements OnInit {
                 this.showToast('Product added!', 'success');
             },
             error: () => { this.submitting = false; this.showToast('Failed to add product', 'error'); }
+        });
+    }
+
+    openEditModal(product: any) {
+        this.editingProduct = { ...product }; // clone so we don't edit table right away
+        this.showEditForm = true;
+    }
+
+    closeEditModal() {
+        this.showEditForm = false;
+        this.editingProduct = null;
+    }
+
+    onEditFileSelected(event: any) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                this.editingProduct.image_url = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    updateProduct() {
+        if (!this.editingProduct.name || !this.editingProduct.price || !this.editingProduct.category) {
+            this.showToast('Please fill in required fields', 'error'); return;
+        }
+        this.updatingProduct = true;
+        this.api.updateProduct(this.editingProduct).subscribe({
+            next: () => {
+                this.updatingProduct = false;
+                this.showEditForm = false;
+                this.editingProduct = null;
+                this.loadProducts();
+                this.showToast('Product updated!', 'success');
+            },
+            error: () => { this.updatingProduct = false; this.showToast('Failed to update product', 'error'); }
+        });
+    }
+
+    editStock(product: any) {
+        this.editingStockId = product.id;
+        product.editStockValue = product.stock;
+    }
+
+    cancelStockEdit(product: any) {
+        this.editingStockId = null;
+        delete product.editStockValue;
+    }
+
+    saveStock(product: any) {
+        if (product.editStockValue < 0) {
+            this.showToast('Stock cannot be negative', 'error');
+            return;
+        }
+        this.api.updateStock({ id: product.id, stock: product.editStockValue }).subscribe({
+            next: () => {
+                product.stock = product.editStockValue;
+                this.editingStockId = null;
+                this.showToast('Stock updated successfully', 'success');
+            },
+            error: () => this.showToast('Failed to update stock', 'error')
         });
     }
 

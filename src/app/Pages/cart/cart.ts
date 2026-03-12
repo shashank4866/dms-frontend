@@ -20,6 +20,7 @@ export class Cart implements OnInit {
     toast = '';
     toastType = 'success';
     placingOrder = false;
+    itemQuantity: { [key: number]: number } = {};
 
     constructor(private api: ApiService, private auth: AuthService, private router: Router) { }
 
@@ -31,20 +32,33 @@ export class Cart implements OnInit {
     loadCart() {
         this.loading = true;
         this.api.getCart(this.user.id).subscribe({
-            next: (res: any) => { this.cartItems = res.data || []; this.loading = false; },
+            next: (res: any) => { 
+                this.cartItems = res.data || []; 
+                this.cartItems.forEach(item => {
+                    if (!this.itemQuantity[item.id]) {
+                        this.itemQuantity[item.id] = 1;
+                    }
+                });
+                this.loading = false; 
+                console.log(this.cartItems); 
+            },
             error: () => { this.loading = false; }
         });
     }
 
     removeItem(id: number) {
         this.api.removeFromCart(id).subscribe({
-            next: () => { this.cartItems = this.cartItems.filter(i => i.id !== id); this.showToast('Removed from cart', 'success'); },
+            next: () => { 
+                this.cartItems = this.cartItems.filter(i => i.id !== id); 
+                delete this.itemQuantity[id];
+                this.showToast('Removed from cart', 'success'); 
+            },
             error: () => this.showToast('Failed to remove', 'error')
         });
     }
 
     get subtotal(): number {
-        return this.cartItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
+        return this.cartItems.reduce((sum, item) => sum + (parseFloat(item.price) * (this.itemQuantity[item.id] || 1)), 0);
     }
     get shipping(): number { return this.subtotal > 100 ? 0 : 9.99; }
     get total(): number { return this.subtotal + this.shipping; }
@@ -56,19 +70,21 @@ export class Cart implements OnInit {
         const total = this.cartItems.length;
         const itemsCopy = [...this.cartItems];
         itemsCopy.forEach(item => {
+            const qty = this.itemQuantity[item.id] || 1;
             this.api.placeOrder({
                 user_id: this.user.id,
                 user_name: this.user.name,
                 product_id: item.pid,
                 product_name: item.name,
-                quantity: 1,
-                total_price: item.price
+                quantity: qty,
+                total_price: parseFloat(item.price) * qty
             }).subscribe({
                 next: () => {
                     this.api.removeFromCart(item.id).subscribe();
                     completed++;
                     if (completed === total) {
                         this.cartItems = [];
+                        this.itemQuantity = {};
                         this.placingOrder = false;
                         this.showToast('Order placed successfully!', 'success');
                         setTimeout(() => this.router.navigate(['/orders']), 1500);
@@ -83,4 +99,23 @@ export class Cart implements OnInit {
         this.toast = msg; this.toastType = type;
         setTimeout(() => this.toast = '', 3000);
     }
+
+
+
+    increaseQuantity(id: number) {
+        const item = this.cartItems.find(i => i.id === id);
+        if (item && (this.itemQuantity[id] || 1) < item.stock) {
+            this.itemQuantity[id] = (this.itemQuantity[id] || 1) + 1;
+        } else if (item && (this.itemQuantity[id] || 1) >= item.stock) {
+            this.showToast('Maximum stock amount reached', 'error');
+        }
+    }
+    decreaseQuantity(id: number) {
+
+        const item = this.cartItems.find(i => i.id === id);
+        if (item && (this.itemQuantity[id] || 1) > 1) {
+            this.itemQuantity[id]--;
+        }
+    }
+
 }

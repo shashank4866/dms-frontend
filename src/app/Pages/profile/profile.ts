@@ -85,9 +85,9 @@ export class Profile implements OnInit {
 
         this.api.updateProfile({ id: this.user.id, user_img: this.previewUrl }).subscribe({
             next: (res: any) => {
-                if (res.success || res.data) {
+                if (res.success || res.status === 200) {
                     // Update user data
-                    const updatedUser = { ...this.user, profilePic: res.data?.profilePic || res.profilePic };
+                    const updatedUser = { ...this.user, user_img: res.data?.user_img || this.user.user_img };
                     localStorage.setItem('user', JSON.stringify(updatedUser));
                     this.user = updatedUser;
                     this.toast.show('Profile updated successfully', 'Success', 5000);

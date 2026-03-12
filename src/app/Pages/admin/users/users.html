@@ -24,7 +24,8 @@
                 <tbody>
                     <tr *ngFor="let user of users">
                         <td class="user-cell">
-                            <div class="user-avatar">{{ getInitials(user.name) }}</div>
+                            <img *ngIf="user.user_img" class="user-avatar-img" [src]="'data:image/jpeg;base64,' + user.user_img" [alt]="user.name" />
+                            <div class="user-avatar" *ngIf="!user.user_img">{{ getInitials(user.name) }}</div>
                             <div>
                                 <div class="u-name">{{ user.name }}</div>
                                 <div class="u-id">ID: #{{ user.id }}</div>

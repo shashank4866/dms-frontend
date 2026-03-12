@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 // local
-// const BASE = 'http://localhost:3002';
+// const BASE = 'http://localhost:3000';
 // prod
 const BASE = 'https://dms-backend-pm4s.onrender.com';
 @Injectable({ providedIn: 'root' })
@@ -28,6 +28,12 @@ export class ApiService {
   }
   addProduct(data: any): Observable<any> {
     return this.http.post(`${BASE}/addProduct`, data);
+  }
+  updateStock(data: any): Observable<any> {
+    return this.http.patch(`${BASE}/updateStock`, data);
+  }
+  updateProduct(data: any): Observable<any> {
+    return this.http.patch(`${BASE}/updateProduct`, data);
   }
 
   // Cart

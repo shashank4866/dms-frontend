@@ -6,8 +6,8 @@
             <div class="profile-header">
                 <div class="avatar-container">
                     <div class="avatar-large">
-                        <img *ngIf="previewUrl" [src]="previewUrl" alt="Profile Preview" />
-                        <span *ngIf="!previewUrl">{{ getInitials() }}</span>
+                        <img *ngIf="previewUrl || user?.user_img" [src]="previewUrl || 'data:image/jpeg;base64,' + user?.user_img" alt="Profile Picture" />
+                        <span *ngIf="!previewUrl && !user?.user_img">{{ getInitials() }}</span>
                     </div>
                     <button *ngIf="isEditing" class="edit-avatar-btn" (click)="triggerFileInput()" title="Upload new picture">
                         <span class="material-icons">camera_alt</span>

@@ -38,15 +38,38 @@ export class ProductDetail implements OnInit {
         }
     }
 
+    increaseQuantity() {
+        if (this.product && this.quantity < this.product.stock) {
+            this.quantity++;
+        }
+    }
+
+    decreaseQuantity() {
+        if (this.quantity > 1) {
+            this.quantity--;
+        }
+    }
+
     addToCart() {
-        this.api.addToCart({
+        let completed = 0;
+        const total = this.quantity;
+        const payload = {
             pid: this.product.id, name: this.product.name, price: this.product.price,
             category: this.product.category, image_url: this.product.image_url,
             stock: this.product.stock, user_id: this.user.id
-        }).subscribe({
-            next: () => this.showToast('Added to cart!', 'success'),
-            error: () => this.showToast('Failed to add to cart', 'error')
-        });
+        };
+
+        for (let i = 0; i < total; i++) {
+            this.api.addToCart(payload).subscribe({
+                next: () => {
+                    completed++;
+                    if (completed === total) {
+                        this.showToast(`Added ${total} item(s) to cart!`, 'success');
+                    }
+                },
+                error: () => this.showToast('Failed to add to cart', 'error')
+            });
+        }
     }
 
     addToWishlist() {

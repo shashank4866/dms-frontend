@@ -27,6 +27,12 @@
                         <h3>{{ item.name }}</h3>
                         <span class="item-category">{{ item.category }}</span>
                     </div>
+                    <!-- quantity selector -->
+                    <div class="item-quantity">
+                        <button (click)="decreaseQuantity(item.id)">-</button>
+                        <span>{{ itemQuantity[item.id] }}</span>
+                        <button (click)="increaseQuantity(item.id)">+</button>
+                    </div>
                     <div class="item-price">${{ item.price }}</div>
                     <button class="remove-btn" (click)="removeItem(item.id)">
                         <span class="material-icons">delete_outline</span>

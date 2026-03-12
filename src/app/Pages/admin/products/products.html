@@ -49,6 +49,51 @@
             </button>
         </div>
 
+        <!-- Edit Product Modal -->
+        <div class="modal-overlay" *ngIf="showEditForm">
+            <div class="modal-content form-panel">
+                <div class="modal-header">
+                    <h3>Edit Product</h3>
+                    <button class="icon-btn" (click)="closeEditModal()"><span class="material-icons">close</span></button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Product Name *</label>
+                        <input type="text" [(ngModel)]="editingProduct.name" />
+                    </div>
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select [(ngModel)]="editingProduct.category">
+                            <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price ($) *</label>
+                        <input type="number" [(ngModel)]="editingProduct.price" min="0" />
+                    </div>
+                    <div class="form-group">
+                        <label>Stock Quantity</label>
+                        <input type="number" [(ngModel)]="editingProduct.stock" min="0" />
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Image URL</label>
+                        <input type="file" (change)="onEditFileSelected($event)" />
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Description</label>
+                        <textarea [(ngModel)]="editingProduct.description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" (click)="closeEditModal()">Cancel</button>
+                    <button class="submit-btn" (click)="updateProduct()" [disabled]="updatingProduct">
+                        <span *ngIf="updatingProduct" class="btn-spinner"></span>
+                        {{ updatingProduct ? 'Updating...' : 'Update Product' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div *ngIf="loading" class="loading">
             <div class="spinner"></div>
         </div>
@@ -75,12 +120,26 @@
                         </td>
                         <td><span class="category-pill">{{ p.category }}</span></td>
                         <td class="price">${{ p.price }}</td>
-                        <td>{{ p.stock }}</td>
+                        <td class="stock-action-cell">
+                            <div class="stock-display" *ngIf="editingStockId !== p.id">
+                                <span>{{ p.stock }}</span>
+                                <button class="icon-btn edit" (click)="editStock(p)" title="Edit Stock"><span class="material-icons">edit</span></button>
+                            </div>
+                            <div class="stock-edit" *ngIf="editingStockId === p.id">
+                                <input type="number" [(ngModel)]="p.editStockValue" min="0" class="stock-inline-input" />
+                                <button class="icon-btn save" (click)="saveStock(p)" title="Save"><span class="material-icons">check</span></button>
+                                <button class="icon-btn cancel" (click)="cancelStockEdit(p)" title="Cancel"><span class="material-icons">close</span></button>
+                            </div>
+                        </td>
                         <td>
-                            <span
-                                [class]="p.stock > 5 ? 'stock-badge in' : p.stock > 0 ? 'stock-badge low' : 'stock-badge out'">
-                                {{ p.stock > 5 ? 'In Stock' : p.stock > 0 ? 'Low' : 'Out' }}
-                            </span>
+                            <div class="action-buttons">
+                                <span [class]="p.stock > 5 ? 'stock-badge in' : p.stock > 0 ? 'stock-badge low' : 'stock-badge out'">
+                                    {{ p.stock > 5 ? 'In Stock' : p.stock > 0 ? 'Low' : 'Out' }}
+                                </span>
+                                <button class="icon-btn edit-product-btn" (click)="openEditModal(p)" title="Edit Product">
+                                    <span class="material-icons">edit</span>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
