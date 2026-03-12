@@ -26,7 +26,7 @@ export class Home implements OnInit {
 
     categories = ['All Products', 'Audio', 'Wearables', 'Computers', 'Photography', 'Mobile'];
     selectedCategory = 'All Products';
-    maxPrice = 2000;
+    maxPrice = 200000;
     sortBy = 'default';
     searchQuery = '';
 
